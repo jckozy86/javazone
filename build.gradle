@@ -1,0 +1,23 @@
+configure (allprojects) { project ->
+    apply plugin: 'java'
+    ext { vertxVersion = "3.3.2" }
+
+    repositories { mavenLocal(); mavenCentral() }
+
+    jar{
+        exclude('META-INF/*.SF', 'META-INF/*.DSA', 'META-INF/*.RSA', 'META-INF/*.MF')
+        from {
+            configurations.compile.collect {
+                it.isDirectory() ? it : zipTree(it)
+            }
+        }
+    }
+
+    dependencies {
+        compile("io.vertx:vertx-core:${vertxVersion}")
+        compile("io.vertx:vertx-hazelcast:${vertxVersion}")
+        testCompile("io.vertx:vertx-unit:${vertxVersion}")
+        testCompile("junit:junit:4.12")
+        compile("biz.paluch.logging:logstash-gelf:1.10.0")
+    }
+}

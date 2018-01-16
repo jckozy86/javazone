@@ -1,0 +1,5 @@
+rootProject.name= 'javazone'
+
+include 'storage'
+//include 'bc-service'
+include 'web'

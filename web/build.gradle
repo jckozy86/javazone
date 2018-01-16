@@ -1,0 +1,12 @@
+version = '1.0-SNAPSHOT'
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'io.vertx.core.Launcher'
+        attributes 'Main-Verticle': 'vertx.bc.service.Main'
+    }
+}
+
+dependencies {
+    compile("io.vertx:vertx-web:${vertxVersion}")
+}

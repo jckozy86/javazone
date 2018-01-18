@@ -3,10 +3,16 @@ version = '1.0-SNAPSHOT'
 jar {
     manifest {
         attributes 'Main-Class': 'io.vertx.core.Launcher'
-        attributes 'Main-Verticle': 'vertx.bc.service.Main'
+        //attributes 'Main-Verticle': 'vertx.bc.service.Main'
     }
 }
 
 dependencies {
     compile("io.vertx:vertx-web:${vertxVersion}")
+    testCompile("guru.nidi.raml:raml-tester:0.8.4")
+    testCompile("org.jboss.resteasy:resteasy-client:3.0.6.Final")
+    compile("io.prometheus:simpleclient_hotspot:0.0.15")
+    compile("io.prometheus:simpleclient_vertx:0.0.15")
+    //compile("io.prometheus:simpleclient_hotspot:0.1.0")
+    //compile("io.prometheus:simpleclient_vertx:0.1.0")
 }

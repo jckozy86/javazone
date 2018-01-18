@@ -22,7 +22,7 @@ storage:
 
 elasticsearch:
   image: elasticsearch:latest
-  command: elasticsearch -E Des.network.host=0.0.0.0
+  command: elasticsearch -E network.host=0.0.0.0
   ports:
     - "9200:9200"
     - "9300:9300"
@@ -34,7 +34,7 @@ logstash:
   links:
     - elasticsearch
   ports:
-    - "12201:12201/udp"
+    - "12201:12201"
 
 kibana:
   image: kibana
@@ -55,3 +55,12 @@ web:
     - "80:8000"
   links:
     - logstash
+
+prometheus:
+  image: prom/prometheus
+  volumes:
+    - ./conf/prometheus.yml:/etc/prometheus/prometheus.yml:Z
+  ports:
+    - "9090:9090"
+  links:
+    - web

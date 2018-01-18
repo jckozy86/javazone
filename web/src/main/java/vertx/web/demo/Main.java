@@ -7,6 +7,9 @@ import io.vertx.core.eventbus.*;
 import io.vertx.core.json.*;
 import io.vertx.ext.web.Router;
 import io.vertx.ext.web.handler.*;
+import io.vertx.ext.web.handler.sockjs.BridgeOptions;
+import io.vertx.ext.web.handler.sockjs.PermittedOptions;
+import io.vertx.ext.web.handler.sockjs.SockJSHandler;
 
 public class Main extends AbstractVerticle {
 
@@ -22,9 +25,21 @@ public class Main extends AbstractVerticle {
 
         final EventBus eb = vertx.eventBus();
         final Router router = Router.router(vertx);
-
+        
+        //allow web client to connect to event bus
+        //this is for the webpack, js, code
+        BridgeOptions opts = new BridgeOptions()
+        		.addOutboundPermitted(
+        				new PermittedOptions().setAddress("javazone.data.updates")
+        				);
+        
+        router.route("/eventbus/*").handler(
+        		SockJSHandler.create(vertx).bridge(opts));
+        
+        
         router.route().handler(LoggerHandler.create());
 
+        
         /*
         //commenting out as now we will add the Junit testing side
         //this is getting replaced by router.get(***)
